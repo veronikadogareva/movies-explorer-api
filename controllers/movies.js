@@ -35,12 +35,12 @@ const deleteMovie = (req, res, next) => {
     Movie.findByIdAndRemove(req.params.id)
     .then((movie) => {
       if (!movie) {
-        return next(new NotFoundError('Карточка с указанным идентификатором не найдена.'));
+        return next(new NotFoundError('Фильм с указанным идентификатором не найден.'));
       }
       if (req.user._id === movie.owner.toString()) {
         return res.send(movie);
       }
-      return next(new ProhibitionError('Вы можете удалять только собственные карточки.'));
+      return next(new ProhibitionError('Вы можете удалять только свои фильмы.'));
     })
     .catch((err) => {
       if (err.name === 'CastError') {

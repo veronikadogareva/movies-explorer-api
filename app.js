@@ -3,17 +3,16 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
-// const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
-require('dotenv').config();
 
 const router = require('./routes/index');
 const error = require('./middlewares/error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const {DB_URL, SERVER_PORT} = require('./helpers/config');
 
 const app = express();
-const { PORT = 4000, DB_URL = 'mongodb://127.0.0.1:27017/moviesdb' } = process.env;
+// const { PORT = 4000, DB_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
 mongoose.connect(DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -41,6 +40,6 @@ app.use(router); //подключение маршрутизации
 app.use(errorLogger);
 app.use(errors()); //подключение валидации
 app.use(error);
-app.listen(PORT, () => {
-    console.log(`Сервер запущен. Порт ${PORT}`);
+app.listen(SERVER_PORT, () => {
+    console.log(`Сервер запущен. Порт ${SERVER_PORT}`);
 });

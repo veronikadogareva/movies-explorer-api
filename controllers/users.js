@@ -7,7 +7,7 @@ const BadRequestError = require('../errors/BadRequestError');
 const ConflictError = require('../errors/ConflictError');
 const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
-
+const { SECRET_KEY } = require('../helpers/config');
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 const getUserInfo = (req, res, next) => {
@@ -74,7 +74,7 @@ const login = (req, res, next) => {
     })
     .then((isValidPassword) => {
       if (!isValidPassword) throw new UnauthorizedError('Неправильные почта или пароль');
-      const token = jwt.sign({ _id: dataBaseUser._id }, 'secret-key', { expiresIn: '7d' });
+      const token = jwt.sign({ _id: dataBaseUser._id }, SECRET_KEY, { expiresIn: '7d' });
       res.cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
