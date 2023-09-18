@@ -1,7 +1,8 @@
 const { celebrate, Joi } = require('celebrate');
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
-const linkRegex = /^(http|https):\/\/(?:www\.)?[a-zA-Z0-9._~\-:?#[\]@!$&'()*+,/;=]{2,256}\.[a-zA-Z0-9./?#-]{2,}$/;
+
+const linkRegex = /^(https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=)?[a-zA-Z0-9_-]{11}|https?:\/\/[a-zA-Z0-9_.\/-]+)$/;
 
 const registerValidation = celebrate({
   body: Joi.object().keys({
@@ -34,11 +35,11 @@ const validateId = celebrate({
 const validateNewMovie = celebrate({
   body: Joi.object().keys({
     nameRU: Joi.string().min(2).max(50).required(),
-    nameEN: Joi.string().min(2).max(50).required(),
-    country: Joi.string().min(2).max(50).required(),
+    nameEN: Joi.string().min(2).max(100).required(),
+    country: Joi.string().min(2).max(100).required(),
     director: Joi.string().min(2).max(50).required(),
     year: Joi.string().min(2).max(4).required(),
-    description: Joi.string().min(2).max(50).required(),
+    description: Joi.string().min(2).required(),
     duration: Joi.number().required(),
     image: Joi.string().required().pattern(linkRegex),
     trailerLink: Joi.string().required().pattern(linkRegex),
