@@ -86,6 +86,8 @@ const login = (req, res, next) => {
         httpOnly: true,
         sameSite: true,
       }).send({ token });
+      console.log('аутентификация успешна');
+      return res.status(200).send({ token });
     })
     .catch(next);
 };

@@ -36,7 +36,7 @@ app.use(helmet());
 app.use(cors());
 app.use(cookieParser());
 app.use(requestLogger);
-app.use(authLimiter);
+// app.use(authLimiter);
 app.use(router); // подключение маршрутизации
 app.use(errorLogger);
 app.use(errors()); // подключение валидации
