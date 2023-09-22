@@ -33,12 +33,7 @@ mongoose.connect(DB_URL, {
   .catch((err) => console.error('Ошибка подключения к БД:', err));
 app.use(bodyParser.json());
 app.use(helmet());
-app.use(cors({
-  origin:[
-    'http://localhost:3000',
-    'https://veronika.movie.nomoredomainsrocks.ru'
-  ]
-}));
+app.use(cors());
 app.use(cookieParser());
 app.use(requestLogger);
 // app.use(authLimiter);
