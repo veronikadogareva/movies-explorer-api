@@ -81,11 +81,6 @@ const login = (req, res, next) => {
     .then((isValidPassword) => {
       if (!isValidPassword) throw new UnauthorizedError(invalidCredentialsMessage);
       const token = jwt.sign({ _id: dataBaseUser._id }, SECRET_KEY, { expiresIn: '7d' });
-      res.cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7,
-        httpOnly: true,
-        sameSite: true,
-      }).send({ token });
       console.log('аутентификация успешна');
       return res.status(200).send({ token });
     })
